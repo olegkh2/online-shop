@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "List of Products";
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 col-xs-4 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row ">
+                    <div class="col-md-12" style="margin: 0 auto;">
+                        <img src="@item.ImageURL" style="width: 100%;" alt="@item.Name">
+                    </div>
+                    @*<div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text">@item.Description</p>
+                            <p class="card-text"><b>Size: </b>@item.Size</p>
+                            <p class="card-text"><b>Weight: </b>@item.Weight</p>
+                            <p class="card-text"><b>Type: </b>@item.Type.Type</p>
+
+                        </div>
+                    </div>*@
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-secondary">
+                            <h6 class="text-md-center">
+                                <a class="text-white" asp-action="Details" asp-route-id="@item.Id">
+                                    @item.Name
+                                </a>
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                }
+
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">
+                                <a class="btn btn-success text-white w-100"
+                                   asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@item.Id">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart <br /> (Price @item.Price.ToString("c"))
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@await Html.PartialAsync("_CreateItem", "Products") 

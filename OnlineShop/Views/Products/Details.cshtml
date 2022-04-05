@@ -1,0 +1,58 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Movie details";
+}
+
+<div class="row">
+        <div class="col-md-8 offset-2">
+            <div class="card mb-12">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-secondary">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @Model.Name
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-1 border-dark">
+                            <img src="@Model.ImageURL" width="100%" alt="@Model.Name">
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <p class="card-text">@Model.Description</p>
+                            <p class="card-text"><b>Size: </b>@Model.Size</p>
+                            <p class="card-text"><b>Weight: </b>@Model.Weight</p>
+                            <p class="card-text"><b>Type: </b>@Model.Type.Type</p>
+                            <p class="card-text">
+                                <b>Materials: </b>
+                                @foreach (var material in Model.Materials_Products)
+                                {
+                                    @material.Material.MaterialName
+                                    <text>; </text>
+                                }
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">
+                                <a class="btn btn-outline-primary float-right" asp-action="Index">
+                                    Back to List
+                                </a>
+                                <a class="btn btn-success text-white"                                   
+                                   asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.Price.ToString("c"))
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
